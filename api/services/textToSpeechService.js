@@ -68,8 +68,9 @@ exports.textToSpeech = async (text, voice = 'alloy', model = 'tts-1') => {
     }
     
     // Check if API key is available
-    if (!process.env.OPENAI_API_KEY || process.env.NODE_ENV === 'development') {
-      // Return a mock audio file in development mode
+    if (!process.env.OPENAI_API_KEY) {
+      console.log('No OpenAI API key available - using mock audio');
+      // Return a mock audio file since we can't use OpenAI
       const mockAudioPath = path.join(__dirname, '../../uploads/mock-audio.mp3');
       
       // If mock audio doesn't exist, create an empty file

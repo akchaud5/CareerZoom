@@ -80,8 +80,9 @@ const transcribeAudio = async (filePath) => {
 // Analyze interview recording
 exports.analyzeInterview = async (interviewData) => {
   try {
-    // If OpenAI API Key is not available or in development mode, return mock analysis
-    if (!process.env.OPENAI_API_KEY || process.env.NODE_ENV === 'development') {
+    // Only use mock data if specifically requested or if we have no API key
+    if (!process.env.OPENAI_API_KEY) {
+      console.log('No OpenAI API key available - using mock data');
       // Simulate processing delay
       await new Promise(resolve => setTimeout(resolve, 1000));
       
@@ -243,8 +244,9 @@ exports.analyzeInterview = async (interviewData) => {
 // Generate personalized recommendations based on weak areas
 exports.generateRecommendations = async (weakAreas) => {
   try {
-    // If OpenAI API Key is not available or in development mode, return mock recommendations
-    if (!process.env.OPENAI_API_KEY || process.env.NODE_ENV === 'development') {
+    // If OpenAI API Key is not available, return mock recommendations
+    if (!process.env.OPENAI_API_KEY) {
+      console.log('No OpenAI API key available - using mock recommendations');
       const recommendations = [];
       
       // Sample recommendation generation logic
@@ -375,8 +377,9 @@ exports.generateRecommendations = async (weakAreas) => {
 // Analyze real-time feedback during interview
 exports.analyzeRealTime = async (data) => {
   try {
-    // If OpenAI API Key is not available or in development mode, return mock feedback
-    if (!process.env.OPENAI_API_KEY || process.env.NODE_ENV === 'development') {
+    // If OpenAI API Key is not available, return mock feedback
+    if (!process.env.OPENAI_API_KEY) {
+      console.log('No OpenAI API key available - using mock real-time feedback');
       return {
         timestamp: new Date().toISOString(),
         pacing: 'good',
