@@ -88,8 +88,8 @@ const ImprovementPlan = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Toggle for using mock data vs real API
-  const USE_MOCK_DATA = false; // Using real API data
+  // Always use real API data
+  const USE_MOCK_DATA = false;
 
   // On first render, verify we have a valid ID
   useEffect(() => {
@@ -123,11 +123,16 @@ const ImprovementPlan = () => {
             console.log('Improvement plan response:', response.data);
             
             // If we get a valid plan, set it
-            if (response.data) {
+            if (response.data && (!response.data.id || !response.data.id.startsWith('starter-plan-'))) {
+              // Valid non-starter plan found
+              console.log('Found real improvement plan:', response.data.id);
               setPlan(response.data);
+            } else if (response.data && response.data.id && response.data.id.startsWith('starter-plan-')) {
+              // Starter plan returned - show instruction screen instead
+              console.warn('Received a starter plan - no real plan generated yet');
+              setPlan(null);
             } else {
-              console.warn('Received empty improvement plan');
-              // Still set the plan to null - empty plan is still valid but will show "No plan" UI
+              console.warn('Received empty or invalid improvement plan');
               setPlan(null);
             }
           } catch (apiError) {
@@ -269,7 +274,7 @@ const ImprovementPlan = () => {
             Summary
           </Typography>
           <Typography variant="body1" paragraph>
-            {plan.summary}
+            {plan.summary ? plan.summary.replace(/\s+/g, ' ').trim() : 'Your personalized improvement plan based on your interview performance.'}
           </Typography>
           
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mb: 2 }}>
@@ -284,14 +289,20 @@ const ImprovementPlan = () => {
           </Box>
           
           <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1 }}>
-            {plan.improvementAreas?.map((area, index) => (
-              <Chip 
-                key={index}
-                label={area} 
-                color="error" 
-                variant="outlined"
-              />
-            ))}
+            {plan.improvementAreas && plan.improvementAreas.length > 0 ? (
+              plan.improvementAreas.map((area, index) => (
+                <Chip 
+                  key={index}
+                  label={area} 
+                  color="error" 
+                  variant="outlined"
+                />
+              ))
+            ) : (
+              <Typography variant="body2" color="text.secondary">
+                No specific improvement areas identified yet. Continue practicing to get more detailed feedback.
+              </Typography>
+            )}
           </Box>
         </Box>
         
