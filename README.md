@@ -92,6 +92,12 @@ npm start
 node utils/seedData.js
 ```
 
+8. Database inspection (optional)
+```bash
+node db-query.js
+```
+This utility script provides a quick overview of the database contents, including users, interviews, feedback, and improvement plans.
+
 ### Development Mode
 
 The application is configured to work in two modes:
@@ -173,6 +179,17 @@ CareerZoom offers an advanced voice-over feature that uses OpenAI's text-to-spee
 - Choose from multiple voice options with different characteristics
 - Audio controls for playing and stopping question playback
 - Automatic voice selection based on interview settings
+- Intelligent fallback to synthetic speech when OpenAI API is unavailable
+
+## AI-Powered Feedback and Analysis
+
+CareerZoom uses OpenAI's powerful AI models to provide real-time feedback and comprehensive analysis:
+
+- Real-time feedback during interviews based on speech content and delivery
+- Post-interview transcript analysis for detailed evaluation
+- AI-generated improvement plans based on performance metrics
+- Smart fallback to mockup data when API is unavailable
+- Debugging tools for database inspection and API monitoring
 
 ## Contributing
 
