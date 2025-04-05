@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#3f51b5" />
+    <meta
+      name="description"
+      content="CareerZoom - Intelligent Interview Preparation Platform"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <title>CareerZoom</title>
+    <script>
+      // Global settings for preventing undefined errors
+      window.userSettings = {
+        darkMode: false,
+        notifications: true,
+        accessibility: {
+          fontSize: 'medium',
+          highContrast: false
+        }
+      };
+      
+      // Prevent specific chunk error from Zoom SDK
+      window.addEventListener('error', function(e) {
+        if (e.message && e.message.includes('userSettings undefined')) {
+          console.log('Prevented userSettings error');
+          e.stopPropagation();
+          e.preventDefault();
+        }
+      }, true);
+    </script>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+</html>
